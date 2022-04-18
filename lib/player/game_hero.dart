@@ -81,7 +81,7 @@ class GameHero extends SimplePlayer with ObjectCollision, Lighting, TapGesture {
   }
 
   @override
-  void receiveDamage(double damage, from) {
+  void receiveDamage(AttackFromEnum attacker, double damage, identify) {
     canMove = false;
 
     final recieveDamageAnimation = lastDirectionHorizontal == Direction.left
@@ -94,7 +94,7 @@ class GameHero extends SimplePlayer with ObjectCollision, Lighting, TapGesture {
         canMove = true;
       },
     );
-    super.receiveDamage(damage, from);
+    super.receiveDamage(attacker, damage, identify);
   }
 
   @override
@@ -154,17 +154,11 @@ class GameHero extends SimplePlayer with ObjectCollision, Lighting, TapGesture {
   }
 
   @override
-  void onTapCancel() {
-    // TODO: implement onTapCancel
-  }
+  void onTapCancel() {}
 
   @override
-  void onTapDown(int pointer, Vector2 position) {
-    // TODO: implement onTapDown
-  }
+  void onTapDown(int pointer, Vector2 position) {}
 
   @override
-  void onTapUp(int pointer, Vector2 position) {
-    // TODO: implement onTapUp
-  }
+  void onTapUp(int pointer, Vector2 position) {}
 }

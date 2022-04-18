@@ -1,15 +1,6 @@
-import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
-import 'package:game_island/decotarions/chess.dart';
-import 'package:game_island/decotarions/lamp.dart';
-import 'package:game_island/decotarions/mushroom.dart';
-import 'package:game_island/game.dart';
 import 'package:game_island/pages/home_page.dart';
-import 'package:game_island/player/game_hero.dart';
-import 'package:game_island/interface/player_interface.dart';
 import 'package:game_island/util/fade_page_transition.dart';
-import 'package:game_island/util/my_game_controller.dart';
-import 'package:game_island/enemies/orc.dart';
 
 const double tileSize = 16;
 

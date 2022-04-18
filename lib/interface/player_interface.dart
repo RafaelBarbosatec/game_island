@@ -54,7 +54,7 @@ class _PlayerInterfaceState extends State<PlayerInterface> {
           Stack(
             children: [
               AnimatedContainer(
-                duration: Duration(milliseconds: 300),
+                duration: const Duration(milliseconds: 300),
                 width: widthCurrent,
                 height: 20,
                 decoration: BoxDecoration(

@@ -17,7 +17,7 @@ class HomePage extends StatelessWidget {
               (route) => false,
             );
           },
-          child: Text('INICIAR'),
+          child: const Text('INICIAR'),
         ),
       ),
     );

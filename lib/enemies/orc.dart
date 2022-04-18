@@ -80,7 +80,7 @@ class Orc extends SimpleEnemy with ObjectCollision, AutomaticRandomMovement {
   }
 
   @override
-  void receiveDamage(double damage, from) {
+  void receiveDamage(AttackFromEnum attacker, double damage, identify) {
     canMove = false;
     final receiveDamageAnimation = lastDirectionHorizontal == Direction.left
         ? OrcSpriteSheet.recieveDamageLeft
@@ -92,8 +92,7 @@ class Orc extends SimpleEnemy with ObjectCollision, AutomaticRandomMovement {
         canMove = true;
       },
     );
-
-    super.receiveDamage(damage, from);
+    super.receiveDamage(attacker, damage, identify);
   }
 
   void _executeAttack() {
