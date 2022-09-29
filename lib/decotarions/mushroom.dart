@@ -28,7 +28,7 @@ class Mushroom extends GameDecoration with Sensor {
     final initialPosition = position.translate(0, tileSize / -2);
     final deslocamentoX = tileSize * Random().nextDouble();
     final deslocamentoY = tileSize / 2 * Random().nextDouble();
-    gameRef.getValueGenerator(
+    generateValues(
       const Duration(milliseconds: 500),
       onChange: (value) {
         double newX = Curves.decelerate.transform(value);

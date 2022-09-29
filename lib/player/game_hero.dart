@@ -1,8 +1,8 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:game_island/sprite_sheets/player_sprite_sheet.dart';
 import 'package:game_island/main.dart';
+import 'package:game_island/sprite_sheets/player_sprite_sheet.dart';
 
 class GameHero extends SimplePlayer with ObjectCollision, Lighting, TapGesture {
   bool canMove = true;
@@ -57,10 +57,7 @@ class GameHero extends SimplePlayer with ObjectCollision, Lighting, TapGesture {
     simpleAttackMelee(
       damage: 20,
       sizePush: tileSize * 0.5,
-      animationLeft: PlayerSpriteSheet.attackLeft,
-      animationDown: PlayerSpriteSheet.attackBottom,
       animationRight: PlayerSpriteSheet.attackRight,
-      animationUp: PlayerSpriteSheet.attackTop,
       size: Vector2.all(tileSize * 0.8),
     );
   }
@@ -152,13 +149,4 @@ class GameHero extends SimplePlayer with ObjectCollision, Lighting, TapGesture {
       );
     }
   }
-
-  @override
-  void onTapCancel() {}
-
-  @override
-  void onTapDown(int pointer, Vector2 position) {}
-
-  @override
-  void onTapUp(int pointer, Vector2 position) {}
 }

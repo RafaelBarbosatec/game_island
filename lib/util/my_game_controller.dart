@@ -20,13 +20,13 @@ class MyGameController extends GameComponent {
             context: context,
             builder: (context) {
               return AlertDialog(
-                content: Text('Parabéns você zerou o game'),
+                content: const Text('Parabéns você zerou o game'),
                 actions: [
                   TextButton(
                     onPressed: () {
                       _goHome();
                     },
-                    child: Text('Ir para o início'),
+                    child: const Text('Ir para o início'),
                   )
                 ],
               );
@@ -37,13 +37,13 @@ class MyGameController extends GameComponent {
             context: context,
             builder: (context) {
               return AlertDialog(
-                content: Text('Parabéns você ganhou'),
+                content: const Text('Parabéns você ganhou'),
                 actions: [
                   TextButton(
                     onPressed: () {
                       _goStage(stage + 1);
                     },
-                    child: Text('Próximo'),
+                    child: const Text('Próximo'),
                   )
                 ],
               );
@@ -60,19 +60,19 @@ class MyGameController extends GameComponent {
           context: context,
           builder: (context) {
             return AlertDialog(
-              content: Text('GAME OVER'),
+              content: const Text('GAME OVER'),
               actions: [
                 TextButton(
                   onPressed: () {
                     _goStage(stage);
                   },
-                  child: Text('Tentar novamente'),
+                  child: const Text('Tentar novamente'),
                 ),
                 TextButton(
                   onPressed: () {
                     _goHome();
                   },
-                  child: Text('Ir para o início'),
+                  child: const Text('Ir para o início'),
                 )
               ],
             );

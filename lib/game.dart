@@ -41,7 +41,7 @@ class _GameState extends State<Game> {
 
   @override
   Widget build(BuildContext context) {
-    return BonfireTiledWidget(
+    return BonfireWidget(
       joystick: Joystick(
         keyboardConfig: KeyboardConfig(),
         directional: JoystickDirectional(
@@ -55,7 +55,7 @@ class _GameState extends State<Game> {
           ),
         ],
       ),
-      map: TiledWorldMap(
+      map: WorldMapByTiled(
         'map/island.json',
         objectsBuilder: {
           // 'orc': (properties) => Orc(properties.position),

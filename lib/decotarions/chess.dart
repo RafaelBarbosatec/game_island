@@ -1,10 +1,9 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
-
-import 'package:game_island/sprite_sheets/decoration_sprite_sheet.dart';
 import 'package:game_island/decotarions/mushroom.dart';
-import 'package:game_island/player/game_hero.dart';
 import 'package:game_island/main.dart';
+import 'package:game_island/player/game_hero.dart';
+import 'package:game_island/sprite_sheets/decoration_sprite_sheet.dart';
 
 class Chess extends GameDecoration with ObjectCollision, TapGesture {
   bool _playerIsClose = false;
@@ -66,13 +65,4 @@ class Chess extends GameDecoration with ObjectCollision, TapGesture {
       gameRef.add(Mushroom(center.translate(tileSize, 0)));
     }
   }
-
-  @override
-  void onTapCancel() {}
-
-  @override
-  void onTapDown(int pointer, Vector2 position) {}
-
-  @override
-  void onTapUp(int pointer, Vector2 position) {}
 }
