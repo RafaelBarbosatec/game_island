@@ -37,7 +37,7 @@ class Chess extends GameDecoration with ObjectCollision, TapGesture {
       notObserved: () {
         _playerIsClose = false;
       },
-      radiusVision: tileSize,
+      radiusVision: tileSize * 1.5,
     );
     super.update(dt);
   }
