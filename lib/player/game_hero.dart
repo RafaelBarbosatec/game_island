@@ -4,8 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:game_island/main.dart';
 import 'package:game_island/sprite_sheets/player_sprite_sheet.dart';
 
-class GameHero extends SimplePlayer with ObjectCollision, Lighting, TapGesture {
-  bool canMove = true;
+class GameHero extends SimplePlayer
+    with BlockMovementCollision, Lighting, TapGesture {
+  bool _canMove = true;
 
   GameHero(Vector2 position)
       : super(
@@ -17,17 +18,6 @@ class GameHero extends SimplePlayer with ObjectCollision, Lighting, TapGesture {
           speed: 50,
           size: Vector2.all(tileSize),
         ) {
-    setupCollision(
-      CollisionConfig(
-        collisions: [
-          CollisionArea.rectangle(
-            size: Vector2(8, 5),
-            align: Vector2(4, 11),
-          ),
-        ],
-      ),
-    );
-
     setupLighting(
       LightingConfig(
         radius: tileSize * 1.5,
@@ -38,18 +28,18 @@ class GameHero extends SimplePlayer with ObjectCollision, Lighting, TapGesture {
   }
 
   @override
-  void joystickAction(JoystickActionEvent event) {
+  void onJoystickAction(JoystickActionEvent event) {
     if (event.event == ActionEvent.DOWN &&
         (event.id == 1 || event.id == LogicalKeyboardKey.space.keyId)) {
       _executeAttack();
     }
-    super.joystickAction(event);
+    super.onJoystickAction(event);
   }
 
   @override
-  void joystickChangeDirectional(JoystickDirectionalEvent event) {
-    if (canMove) {
-      super.joystickChangeDirectional(event);
+  void onJoystickChangeDirectional(JoystickDirectionalEvent event) {
+    if (_canMove) {
+      super.onJoystickChangeDirectional(event);
     }
   }
 
@@ -63,7 +53,7 @@ class GameHero extends SimplePlayer with ObjectCollision, Lighting, TapGesture {
   }
 
   @override
-  void die() {
+  void onDie() {
     final dieAnimation = lastDirectionHorizontal == Direction.left
         ? PlayerSpriteSheet.dieLeft
         : PlayerSpriteSheet.dieRight;
@@ -74,12 +64,13 @@ class GameHero extends SimplePlayer with ObjectCollision, Lighting, TapGesture {
         removeFromParent();
       },
     );
-    super.die();
+    super.onDie();
   }
 
   @override
-  void receiveDamage(AttackFromEnum attacker, double damage, identify) {
-    canMove = false;
+  void onRemoveLife(double life) {
+    _canMove = false;
+    stopMove();
 
     final recieveDamageAnimation = lastDirectionHorizontal == Direction.left
         ? PlayerSpriteSheet.recieveDamageLeft
@@ -88,10 +79,10 @@ class GameHero extends SimplePlayer with ObjectCollision, Lighting, TapGesture {
       recieveDamageAnimation,
       runToTheEnd: true,
       onFinish: () {
-        canMove = true;
+        _canMove = true;
       },
     );
-    super.receiveDamage(attacker, damage, identify);
+    super.onRemoveLife(life);
   }
 
   @override
@@ -148,5 +139,16 @@ class GameHero extends SimplePlayer with ObjectCollision, Lighting, TapGesture {
         align: const Offset(10, 10),
       );
     }
+  }
+
+  @override
+  Future<void> onLoad() {
+    add(
+      RectangleHitbox(
+        size: Vector2(8, 5),
+        position: Vector2(4, 11),
+      ),
+    );
+    return super.onLoad();
   }
 }

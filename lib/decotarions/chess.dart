@@ -1,11 +1,10 @@
 import 'package:bonfire/bonfire.dart';
-import 'package:flutter/material.dart';
 import 'package:game_island/decotarions/mushroom.dart';
 import 'package:game_island/main.dart';
 import 'package:game_island/player/game_hero.dart';
 import 'package:game_island/sprite_sheets/decoration_sprite_sheet.dart';
 
-class Chess extends GameDecoration with ObjectCollision, TapGesture {
+class Chess extends GameDecoration with TapGesture, Vision {
   bool _playerIsClose = false;
 
   Sprite? chess, chessOpen;
@@ -15,17 +14,7 @@ class Chess extends GameDecoration with ObjectCollision, TapGesture {
           sprite: DecorationSpriteSheet.chess,
           position: position,
           size: Vector2(16, 32),
-        ) {
-    setupCollision(
-      CollisionConfig(collisions: [
-        CollisionArea.rectangle(
-          size: Vector2(16, 16),
-          align: Vector2(0, 16),
-        ),
-      ]),
-    );
-  }
-
+        );
   @override
   void update(double dt) {
     seeComponentType<GameHero>(
@@ -54,6 +43,12 @@ class Chess extends GameDecoration with ObjectCollision, TapGesture {
 
   @override
   Future<void> onLoad() async {
+    add(
+      RectangleHitbox(
+        size: Vector2(16, 16),
+        position: Vector2(0, 16),
+      ),
+    );
     chess = await DecorationSpriteSheet.chess;
     chessOpen = await DecorationSpriteSheet.chessOpen;
     return super.onLoad();
@@ -62,7 +57,7 @@ class Chess extends GameDecoration with ObjectCollision, TapGesture {
   @override
   void onTap() {
     if (_playerIsClose) {
-      gameRef.add(Mushroom(center.translate(tileSize, 0)));
+      gameRef.add(Mushroom(center.translated(tileSize, 0)));
     }
   }
 }

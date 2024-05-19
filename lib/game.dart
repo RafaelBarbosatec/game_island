@@ -1,14 +1,14 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
-import 'package:game_island/player/game_hero.dart';
 import 'package:game_island/main.dart';
+import 'package:game_island/player/game_hero.dart';
 import 'package:game_island/util/my_game_controller.dart';
 
 import 'decotarions/chess.dart';
 import 'decotarions/lamp.dart';
 import 'decotarions/mushroom.dart';
-import 'interface/player_interface.dart';
 import 'enemies/orc.dart';
+import 'interface/player_interface.dart';
 
 class Game extends StatefulWidget {
   final int stage;
@@ -42,21 +42,23 @@ class _GameState extends State<Game> {
   @override
   Widget build(BuildContext context) {
     return BonfireWidget(
-      joystick: Joystick(
-        keyboardConfig: KeyboardConfig(),
-        directional: JoystickDirectional(
-          color: Colors.orange,
-        ),
-        actions: [
-          JoystickAction(
-            actionId: 1,
+      playerControllers: [
+        Joystick(
+          directional: JoystickDirectional(
             color: Colors.orange,
-            margin: const EdgeInsets.all(40),
           ),
-        ],
-      ),
+          actions: [
+            JoystickAction(
+              actionId: 1,
+              color: Colors.orange,
+              margin: const EdgeInsets.all(40),
+            ),
+          ],
+        ),
+        Keyboard(),
+      ],
       map: WorldMapByTiled(
-        'map/island.json',
+        WorldMapReader.fromAsset('map/island.json'),
         objectsBuilder: {
           // 'orc': (properties) => Orc(properties.position),
           'lamp': (properties) => Lamp(properties.position),
@@ -82,8 +84,7 @@ class _GameState extends State<Game> {
       cameraConfig: CameraConfig(
         moveOnlyMapArea: true,
         zoom: defaultZoom,
-        // smoothCameraEnable: true,
-        sizeMovementWindow: Vector2(
+        movementWindow: Vector2(
           tileSize * 3,
           tileSize * 3,
         ),

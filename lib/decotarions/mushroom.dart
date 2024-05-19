@@ -25,7 +25,7 @@ class Mushroom extends GameDecoration with Sensor {
 
   @override
   void onMount() {
-    final initialPosition = position.translate(0, tileSize / -2);
+    final initialPosition = position.translated(0, tileSize / -2);
     final deslocamentoX = tileSize * Random().nextDouble();
     final deslocamentoY = tileSize / 2 * Random().nextDouble();
     generateValues(
@@ -33,7 +33,7 @@ class Mushroom extends GameDecoration with Sensor {
       onChange: (value) {
         double newX = Curves.decelerate.transform(value);
         double newY = Curves.bounceInOut.transform(value);
-        position = initialPosition.translate(
+        position = initialPosition.translated(
           deslocamentoX * newX,
           deslocamentoY * newY,
         );

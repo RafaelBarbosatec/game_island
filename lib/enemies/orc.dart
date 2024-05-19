@@ -1,12 +1,11 @@
-import 'dart:ui';
-
 import 'package:bonfire/bonfire.dart';
 import 'package:game_island/main.dart';
 import 'package:game_island/sprite_sheets/orc_sprite_sheet.dart';
 import 'package:game_island/sprite_sheets/player_sprite_sheet.dart';
 
-class Orc extends SimpleEnemy with ObjectCollision, AutomaticRandomMovement {
-  bool canMove = true;
+class Orc extends SimpleEnemy
+    with BlockMovementCollision, RandomMovement, UseLifeBar {
+  bool _canMove = true;
 
   Orc(Vector2 position)
       : super(
@@ -17,22 +16,11 @@ class Orc extends SimpleEnemy with ObjectCollision, AutomaticRandomMovement {
             idleRight: OrcSpriteSheet.idleRight,
             runRight: OrcSpriteSheet.runRight,
           ),
-        ) {
-    setupCollision(
-      CollisionConfig(
-        collisions: [
-          CollisionArea.rectangle(
-            size: Vector2(8, 5),
-            align: Vector2(4, 11),
-          ),
-        ],
-      ),
-    );
-  }
+        );
 
   @override
   void update(double dt) {
-    if (canMove) {
+    if (_canMove) {
       seePlayer(
         observed: (player) {
           seeAndMoveToPlayer(
@@ -54,18 +42,7 @@ class Orc extends SimpleEnemy with ObjectCollision, AutomaticRandomMovement {
   }
 
   @override
-  void render(Canvas canvas) {
-    drawDefaultLifeBar(
-      canvas,
-      borderWidth: 2,
-      height: 2,
-      align: const Offset(0, -5),
-    );
-    super.render(canvas);
-  }
-
-  @override
-  void die() {
+  void onDie() {
     final dieAnimation = lastDirectionHorizontal == Direction.left
         ? OrcSpriteSheet.dieLeft
         : OrcSpriteSheet.dieRight;
@@ -76,15 +53,13 @@ class Orc extends SimpleEnemy with ObjectCollision, AutomaticRandomMovement {
         removeFromParent();
       },
     );
-    super.die();
+    super.onDie();
   }
 
   @override
-  void receiveDamage(AttackFromEnum attacker, double damage, identify) {
-    if (isDead) {
-      return;
-    }
-    canMove = false;
+  void onRemoveLife(double life) {
+    _canMove = false;
+    stopMove();
     final receiveDamageAnimation = lastDirectionHorizontal == Direction.left
         ? OrcSpriteSheet.recieveDamageLeft
         : OrcSpriteSheet.recieveDamageRight;
@@ -92,10 +67,10 @@ class Orc extends SimpleEnemy with ObjectCollision, AutomaticRandomMovement {
       receiveDamageAnimation,
       runToTheEnd: true,
       onFinish: () {
-        canMove = true;
+        _canMove = true;
       },
     );
-    super.receiveDamage(attacker, damage, identify);
+    super.onRemoveLife(life);
   }
 
   void _executeAttack() {
@@ -105,5 +80,14 @@ class Orc extends SimpleEnemy with ObjectCollision, AutomaticRandomMovement {
       animationRight: PlayerSpriteSheet.attackRight,
       size: Vector2.all(tileSize * 0.8),
     );
+  }
+
+  @override
+  Future<void> onLoad() {
+    add(RectangleHitbox(
+      size: Vector2(8, 5),
+      position: Vector2(4, 11),
+    ));
+    return super.onLoad();
   }
 }
