@@ -21,6 +21,10 @@ class MyApp extends StatelessWidget {
         pageTransitionsTheme: PageTransitionsTheme(
           builders: {
             TargetPlatform.macOS: FadePageTransition(),
+            TargetPlatform.windows: FadePageTransition(),
+            TargetPlatform.linux: FadePageTransition(),
+            TargetPlatform.iOS: FadePageTransition(),
+            TargetPlatform.android: FadePageTransition(),
           },
         ),
       ),
