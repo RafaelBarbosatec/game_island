@@ -4,7 +4,6 @@ import 'package:game_island/util/fade_page_transition.dart';
 
 const double tileSize = 16;
 
-const double defaultZoom = 2.5;
 void main() {
   runApp(const MyApp());
 }

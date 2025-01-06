@@ -4,8 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:game_island/main.dart';
 import 'package:game_island/sprite_sheets/player_sprite_sheet.dart';
 
-class GameHero extends SimplePlayer
-    with BlockMovementCollision, Lighting, TapGesture {
+class GameHero extends SimplePlayer with BlockMovementCollision, Lighting {
   bool _canMove = true;
 
   GameHero(Vector2 position)
@@ -30,7 +29,7 @@ class GameHero extends SimplePlayer
   @override
   void onJoystickAction(JoystickActionEvent event) {
     if (event.event == ActionEvent.DOWN &&
-        (event.id == 1 || event.id == LogicalKeyboardKey.space.keyId)) {
+        (event.id == 1 || event.id == LogicalKeyboardKey.space)) {
       _executeAttack();
     }
     super.onJoystickAction(event);
@@ -83,62 +82,6 @@ class GameHero extends SimplePlayer
       },
     );
     super.onRemoveLife(life);
-  }
-
-  @override
-  void onTap() {
-    // TalkDialog.show(context, [
-    //   Say(
-    //     text: [
-    //       TextSpan(text: 'AJHGAH dsjhgds dkjashdjksa kdjashdasd'),
-    //     ],
-    //     person: SizedBox(
-    //       height: 100,
-    //       width: 100,
-    //       child: PlayerSpriteSheet.heroIdleRight.asWidget(),
-    //     ),
-    //   ),
-    //   Say(
-    //     text: [
-    //       TextSpan(text: 'AJHGAH dsjhgds dkjashdjksa kdjashdasd'),
-    //     ],
-    //     person: SizedBox(
-    //       height: 100,
-    //       width: 100,
-    //       child: OrcSpriteSheet.idleRight.asWidget(),
-    //     ),
-    //     personSayDirection: PersonSayDirection.RIGHT,
-    //   ),
-    // ],);
-    if (FollowerWidget.isVisible('identify')) {
-      FollowerWidget.remove('identify');
-    } else {
-      FollowerWidget.show(
-        identify: 'identify',
-        context: context,
-        target: this,
-        child: Card(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                const Icon(Icons.add),
-                const Text('Olá'),
-                ElevatedButton(
-                  onPressed: () {
-                    if (FollowerWidget.isVisible('identify')) {
-                      FollowerWidget.remove('identify');
-                    }
-                  },
-                  child: const Text('Ok'),
-                )
-              ],
-            ),
-          ),
-        ),
-        align: const Offset(10, 10),
-      );
-    }
   }
 
   @override

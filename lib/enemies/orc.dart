@@ -21,20 +21,16 @@ class Orc extends SimpleEnemy
   @override
   void update(double dt) {
     if (_canMove) {
-      seePlayer(
-        observed: (player) {
-          seeAndMoveToPlayer(
-            closePlayer: (player) {
-              _executeAttack();
-            },
-            radiusVision: tileSize * 2,
-            margin: 4,
-          );
-        },
-        notObserved: () {
-          runRandomMovement(dt);
+      seeAndMoveToPlayer(
+        closePlayer: (player) {
+          _executeAttack();
         },
         radiusVision: tileSize * 2,
+        margin: 4,
+        notObserved: () {
+          runRandomMovement(dt);
+          return false;
+        },
       );
     }
 
@@ -84,10 +80,12 @@ class Orc extends SimpleEnemy
 
   @override
   Future<void> onLoad() {
-    add(RectangleHitbox(
-      size: Vector2(8, 5),
-      position: Vector2(4, 11),
-    ));
+    add(
+      RectangleHitbox(
+        size: Vector2(8, 5),
+        position: Vector2(4, 11),
+      ),
+    );
     return super.onLoad();
   }
 }

@@ -60,7 +60,6 @@ class _GameState extends State<Game> {
       map: WorldMapByTiled(
         WorldMapReader.fromAsset('map/island.json'),
         objectsBuilder: {
-          // 'orc': (properties) => Orc(properties.position),
           'lamp': (properties) => Lamp(properties.position),
           'chess': (properties) => Chess(properties.position),
           'mushroom': (properties) => Mushroom(properties.position),
@@ -83,11 +82,8 @@ class _GameState extends State<Game> {
       ],
       cameraConfig: CameraConfig(
         moveOnlyMapArea: true,
-        zoom: defaultZoom,
-        movementWindow: Vector2(
-          tileSize * 3,
-          tileSize * 3,
-        ),
+        zoom: getZoomFromMaxVisibleTile(context, tileSize, 15),
+        movementWindow: Vector2.all(tileSize),
       ),
       lightingColorGame: Colors.black.withOpacity(0.5),
     );
